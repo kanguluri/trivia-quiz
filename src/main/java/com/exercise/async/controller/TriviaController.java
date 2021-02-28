@@ -30,28 +30,33 @@ public class TriviaController {
 
         List<TriviaResult> allCompletableFuture = Stream.of(resultsByBookCategory, resultsByFilmCategory).map(CompletableFuture::join).collect(Collectors.toList());
 
-        List<Map<String, List<TriviaQuestion>>> groupCategories = new ArrayList<>();
+        List<TriviaQuizWrapperResponse> quizWrapperResponseList = transformResponse(allCompletableFuture);
+        return quizWrapperResponseList;
+    }
+
+    private List<TriviaQuizWrapperResponse> transformResponse(List<TriviaResult> allCompletableFuture) {
+        List<Map<String, List<TriviaQuestion>>> listOfGroupCategoryMaps = new ArrayList<>();
         for (TriviaResult result : allCompletableFuture) {
             List<TriviaQuestion> questions = result.getQuestions();
             Map<String, List<TriviaQuestion>> groupByCategory = questions.stream().collect(Collectors.groupingBy(TriviaQuestion::getCategory));
-            groupCategories.add(groupByCategory);
+            listOfGroupCategoryMaps.add(groupByCategory);
         }
 
-        Map<String, List<TriviaQuestion>> result = new HashMap<>();
-        groupCategories.forEach(map -> result.putAll(map.entrySet().stream()
+        Map<String, List<TriviaQuestion>> flattenMap = new HashMap<>();
+        listOfGroupCategoryMaps.forEach(map -> flattenMap.putAll(map.entrySet().stream()
                 .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()))));
 
-        List<TriviaQuizWrapperResponse> quizResults = new ArrayList<>();
-        for (Map.Entry<String, List<TriviaQuestion>> entry : result.entrySet()) {
+        List<TriviaQuizWrapperResponse> quizWrapperResponseList = new ArrayList<>();
+        for (Map.Entry<String, List<TriviaQuestion>> entry : flattenMap.entrySet()) {
             TriviaQuizWrapperResponse triviaQuizWrapperResponse = new TriviaQuizWrapperResponse();
             triviaQuizWrapperResponse.setCategory(entry.getKey());
             List<TriviaQuizResponse> response = entry.getValue().stream().
                     map(e -> convertToQuizResponse(e)).collect(Collectors.toList());
 
             triviaQuizWrapperResponse.setResults(response);
-            quizResults.add(triviaQuizWrapperResponse);
+            quizWrapperResponseList.add(triviaQuizWrapperResponse);
         }
-        return quizResults;
+        return quizWrapperResponseList;
     }
 
     private TriviaQuizResponse convertToQuizResponse(TriviaQuestion triviaQuestion) {
