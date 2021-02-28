@@ -1,6 +1,5 @@
 package com.exercise.async.exception;
 
-import com.exercise.async.service.AsyncService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

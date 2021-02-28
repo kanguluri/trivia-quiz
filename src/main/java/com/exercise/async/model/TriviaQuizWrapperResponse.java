@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 
 @JsonRootName("quiz")
-public class QuizResult {
+public class TriviaQuizWrapperResponse {
     private String category;
-    List<TriviaQuestion> results;
+    List<TriviaQuizResponse> results;
 
     public String getCategory() {
         return category;
@@ -19,11 +19,11 @@ public class QuizResult {
         this.category = category;
     }
 
-    public List<TriviaQuestion> getResults() {
+    public List<TriviaQuizResponse> getResults() {
         return results;
     }
 
-    public void setResults(List<TriviaQuestion> results) {
+    public void setResults(List<TriviaQuizResponse> results) {
         this.results = results;
     }
 }

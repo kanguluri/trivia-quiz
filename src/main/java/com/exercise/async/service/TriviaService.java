@@ -1,7 +1,7 @@
 package com.exercise.async.service;
 
 import com.exercise.async.exception.RestTemplateResponseErrorHandler;
-import com.exercise.async.model.TriviaResult;
+import com.exercise.async.model.downstream.TriviaResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +14,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class AsyncService {
+public class TriviaService {
 
-    private static Logger log = LoggerFactory.getLogger(AsyncService.class);
+    private static Logger log = LoggerFactory.getLogger(TriviaService.class);
 
     private static final String BASE_URL = "https://opentdb.com/api.php";
 
     private RestTemplate restTemplate;
 
     @Autowired
-    public AsyncService(RestTemplateBuilder restTemplateBuilder) {
+    public TriviaService(RestTemplateBuilder restTemplateBuilder) {
          restTemplate = restTemplateBuilder
                .errorHandler(new RestTemplateResponseErrorHandler())
                 .build();

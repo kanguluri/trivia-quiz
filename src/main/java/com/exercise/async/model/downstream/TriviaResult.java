@@ -1,4 +1,4 @@
-package com.exercise.async.model;
+package com.exercise.async.model.downstream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

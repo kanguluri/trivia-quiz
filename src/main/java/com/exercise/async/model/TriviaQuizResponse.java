@@ -1,28 +1,18 @@
 package com.exercise.async.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class TriviaQuestion {
-    private String category;
+public class TriviaQuizResponse {
+
     private String type;
     private String difficulty;
     private String question;
+    @JsonProperty("all_answers")
+    private List<String> allAnswers;
     @JsonProperty("correct_answer")
     private String correctAnswer;
-    @JsonProperty("incorrect_answers")
-    private ArrayList<String> incorrectAnswers;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
 
     public String getType() {
         return type;
@@ -56,11 +46,11 @@ public class TriviaQuestion {
         this.correctAnswer = correctAnswer;
     }
 
-    public ArrayList<String> getIncorrectAnswers() {
-        return incorrectAnswers;
+    public List<String> getAllAnswers() {
+        return allAnswers;
     }
 
-    public void setIncorrectAnswers(ArrayList<String> incorrectAnswers) {
-        this.incorrectAnswers = incorrectAnswers;
+    public void setAllAnswers(List<String> allAnswers) {
+        this.allAnswers = allAnswers;
     }
 }
