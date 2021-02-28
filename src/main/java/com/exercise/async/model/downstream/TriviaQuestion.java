@@ -15,7 +15,6 @@ public class TriviaQuestion {
     @JsonProperty("incorrect_answers")
     private ArrayList<String> incorrectAnswers;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getCategory() {
         return category;
     }
